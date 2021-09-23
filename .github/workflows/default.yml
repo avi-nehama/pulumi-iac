@@ -12,12 +12,12 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.9
-      - name: Configure Azure Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+
+      - name: Azure Login
+        uses: Azure/login@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-region: ${{ secrets.AWS_REGION }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
+          creds:  ${{ secrets.AZURE_CREDENTIALS }}
       - run: pip install -r requirements.txt
       - uses: pulumi/actions@v3
         with:
