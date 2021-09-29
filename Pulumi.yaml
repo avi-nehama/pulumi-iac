@@ -1,4 +1,4 @@
-name: azure-py-aks
+name: pulumi-test
 runtime:
   name: python
   options:
