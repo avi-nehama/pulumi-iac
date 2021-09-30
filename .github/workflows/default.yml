@@ -24,5 +24,6 @@ jobs:
           command: up
           stack-name: dev
         env:
-          ARM_CLIENT_SECRET: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_CREDENTIALS }}
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
