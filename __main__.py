@@ -8,7 +8,7 @@ CLUSTER_NAME        = "dev-k8s-cluster"
 PUBLIC_KEY_CERT     = "agent_public_key_certificate"
 LOCATION            = "eastus"
 
-resource_group = resources.ResourceGroup("",
+resource_group = resources.ResourceGroup(RESOURCE_GROUP_NAME,
     location=LOCATION, resource_group_name = RESOURCE_GROUP_NAME)
 
 cluster = kubernetes.ConnectedCluster("connectedCluster",
