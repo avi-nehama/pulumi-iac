@@ -19,7 +19,6 @@ resource_group = resources.ResourceGroup(RESOURCE_GROUP_NAME,
 # )
 
 cluster = containerservice.ManagedCluster("myCluster",
-    cluster_name=CLUSTER_NAME,
     location=LOCATION,
     resource_group_name=RESOURCE_GROUP_NAME
 )
