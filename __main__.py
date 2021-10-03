@@ -3,15 +3,21 @@ from pulumi_azure_native import resources, kubernetes
 
 config = pulumi.Config()
 
-resource_group = resources.ResourceGroup("myResourceGroup",
-    location="eastus", resource_group_name="zure-native-py-aks")
+RESOURCE_GROUP_NAME = "dev-RG" 
+CLUSTER_NAME        = "dev-k8s-cluster"
+PUBLIC_KEY_CERT     = "agent_public_key_certificate"
+LOCATION            = "eastus"
+
+resource_group = resources.ResourceGroup("",
+    location=LOCATION, resource_group_name = RESOURCE_GROUP_NAME)
 
 cluster = kubernetes.ConnectedCluster("connectedCluster",
-    cluster_name="testCluster",
+    cluster_name=CLUSTER_NAME,
+    agent_public_key_certificate=PUBLIC_KEY_CERT,
     identity=kubernetes.ConnectedClusterIdentityArgs(
         type="SystemAssigned",
     ),
-    location="East US",
-    resource_group_name="k8sc-rg",
+    location=LOCATION,
+    resource_group_name=RESOURCE_GROUP_NAME,
     tags={}
 )
