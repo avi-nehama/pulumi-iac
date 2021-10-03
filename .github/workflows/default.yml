@@ -19,7 +19,14 @@ jobs:
         with:
           # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
           creds:  ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - uses: actions/cache@v2
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
+      
       - run: pip install -r requirements.txt
+
       - uses: pulumi/actions@v3
         with:
           command: up
