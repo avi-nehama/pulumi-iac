@@ -13,10 +13,10 @@ resource_group = resources.ResourceGroup(RESOURCE_GROUP_NAME,
     location=LOCATION, resource_group_name = RESOURCE_GROUP_NAME)
 
 # Create Azure AD Application for AKS
-# app = azuread.Application(
-#     "dev-aks-app",
-#     display_name="dev-aks-app"
-# )
+app = azuread.Application(
+    "dev-aks-app",
+    display_name="dev-aks-app"
+)
 
 cluster = containerservice.ManagedCluster("myCluster",
     location=LOCATION,
