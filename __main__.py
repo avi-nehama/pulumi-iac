@@ -1,5 +1,5 @@
 import pulumi
-from pulumi_azure_native import resources, containerservice
+from pulumi_azure_native import resources, containerservice, network
 import pulumi_azuread as azuread
 
 config = pulumi.Config()
@@ -18,6 +18,15 @@ resource_group = resources.ResourceGroup(RESOURCE_GROUP_NAME,
 #     display_name="dev-aks-app"
 # )
 
+vnet = network.VirtualNetwork(
+    f"avin-vnet",
+    location=resource_group.location,
+    resource_group_name=resource_group.name,
+    address_space={
+        "address_prefixes": ["10.0.0.0/16"],
+    }
+)
+
 cluster = containerservice.ManagedCluster("myCluster",
     location=LOCATION,
     resource_group_name=RESOURCE_GROUP_NAME,
@@ -33,6 +42,7 @@ cluster = containerservice.ManagedCluster("myCluster",
         "os_type": containerservice.OSType.LINUX,
         "max_pods": 110,
     }],
-    dns_prefix="dns",    
+    dns_prefix="dns",
+        
 
 )
