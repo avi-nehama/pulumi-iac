@@ -13,12 +13,26 @@ resource_group = resources.ResourceGroup(RESOURCE_GROUP_NAME,
     location=LOCATION, resource_group_name = RESOURCE_GROUP_NAME)
 
 # Create Azure AD Application for AKS
-app = azuread.Application(
-    "dev-aks-app",
-    display_name="dev-aks-app"
-)
+# app = azuread.Application(
+#     "dev-aks-app",
+#     display_name="dev-aks-app"
+# )
 
 cluster = containerservice.ManagedCluster("myCluster",
     location=LOCATION,
-    resource_group_name=RESOURCE_GROUP_NAME
+    resource_group_name=RESOURCE_GROUP_NAME,
+    service_principal_profile={
+        "client_id": "e2f89c57-2140-4d65-9270-1dfb7663c40d",
+        "secret": "lnt2qwe~.fAXWVR5a8hVC5raq6QlBXYTAz"
+    },
+        agent_pool_profiles=[{
+        "name": "type1",
+        "mode": "System",
+        "count": 2,
+        "vm_size": "Standard_B2ms",
+        "os_type": containerservice.OSType.LINUX,
+        "max_pods": 110,
+    }],
+    dns_prefix="dns",    
+
 )
