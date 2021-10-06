@@ -27,14 +27,21 @@ vnet = network.VirtualNetwork(
     }
 )
 
+subnet = network.Subnet(
+    f"avin-subnet",
+    resource_group_name=resource_group.name,
+    address_prefix="10.0.0.0/24",
+    virtual_network_name=vnet.name
+)
+
 cluster = containerservice.ManagedCluster("myCluster",
     location=LOCATION,
-    resource_group_name=RESOURCE_GROUP_NAME,
+    resource_group_name=resource_group.name,
     service_principal_profile={
         "client_id": "e2f89c57-2140-4d65-9270-1dfb7663c40d",
         "secret": "lnt2qwe~.fAXWVR5a8hVC5raq6QlBXYTAz"
     },
-        agent_pool_profiles=[{
+    agent_pool_profiles=[{
         "name": "type1",
         "mode": "System",
         "count": 2,
@@ -43,6 +50,5 @@ cluster = containerservice.ManagedCluster("myCluster",
         "max_pods": 110,
     }],
     dns_prefix="dns",
-        
-
+   
 )
