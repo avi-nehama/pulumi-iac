@@ -1,6 +1,8 @@
 import pulumi
 from pulumi_azure_native import resources, containerservice, network
-import pulumi_azuread as azuread
+from pulumi_azure_native.containerservice.agent_pool import AgentPool, AgentPoolArgs
+from pulumi_azure_native.containerservice.managed_cluster import ManagedCluster
+import pulumi_kubernetes as k8s
 
 config = pulumi.Config()
 
@@ -37,18 +39,31 @@ subnet = network.Subnet(
 cluster = containerservice.ManagedCluster("myCluster",
     location=LOCATION,
     resource_group_name=resource_group.name,
-    service_principal_profile={
-        "client_id": "e2f89c57-2140-4d65-9270-1dfb7663c40d",
-        "secret": "lnt2qwe~.fAXWVR5a8hVC5raq6QlBXYTAz"
-    },
-    agent_pool_profiles=[{
-        "name": "type1",
-        "mode": "System",
-        "count": 2,
-        "vm_size": "Standard_B2ms",
-        "os_type": containerservice.OSType.LINUX,
-        "max_pods": 110,
-    }],
+    # service_principal_profile={
+    #     "client_id": "e2f89c57-2140-4d65-9270-1dfb7663c40d",
+    #     "secret": "lnt2qwe~.fAXWVR5a8hVC5raq6QlBXYTAz"
+    # },
+    agent_pool_profiles=[
+        {
+            "name": "type1",
+            "mode": "System",
+            "count": 2,
+            "vm_size": "Standard_B2ms",
+            "os_type": containerservice.OSType.LINUX,
+            "max_pods": 110,
+        },
+    ],
     dns_prefix="dns",
-   
+    api_server_access_profile={
+        "enable_private_cluster": False
+    },
+    network_profile={
+        "network_plugin": "azure",
+        "service_cidr": "10.10.0.0/16",
+        "dns_service_ip": "10.10.0.10",
+        "docker_bridge_cidr": "172.17.0.1/16"
+    },    
+    
 )
+
+ns = k8s.core.v1.Namespace("ns", metadata=ca)
