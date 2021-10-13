@@ -39,10 +39,10 @@ subnet = network.Subnet(
 cluster = containerservice.ManagedCluster("myCluster",
     location=LOCATION,
     resource_group_name=resource_group.name,
-    # service_principal_profile={
-    #     "client_id": "e2f89c57-2140-4d65-9270-1dfb7663c40d",
-    #     "secret": "lnt2qwe~.fAXWVR5a8hVC5raq6QlBXYTAz"
-    # },
+    service_principal_profile={
+        "client_id": "4feff21b-069c-49e7-8c58-7cc8d9629e3b",
+        "secret": "za0vP9Mjqqg7Kqvd_KIF3HzrdQyPi9~v-X"
+    },
     agent_pool_profiles=[
         {
             "name": "type1",
